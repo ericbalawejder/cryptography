@@ -37,7 +37,8 @@ class BigIntegerPrimesTest {
     //@Disabled("Remove to run test")
     @Test
     public void testFactorialFive() {
-        assertEquals(BigIntegerPrimes.factorial(new BigInteger("5")), new BigInteger("120"));
+        assertEquals(BigIntegerPrimes.factorial(new BigInteger("5")),
+                new BigInteger("120"));
     }
 
     //@Disabled("Remove to run test")
@@ -74,42 +75,45 @@ class BigIntegerPrimesTest {
     //@Disabled("Remove to run test")
     @Test
     public void noPrimesUnder2BigInteger() {
-        List<BigInteger> expectedOutput = Collections.emptyList();
+        final List<BigInteger> expected = Collections.emptyList();
 
-        assertEquals(expectedOutput, BigIntegerPrimes.sieve(BigInteger.ONE));
+        assertEquals(expected, BigIntegerPrimes.sieve(BigInteger.ONE));
     }
 
     //@Disabled("Remove to run test")
     @Test
     public void findFirstPrimeBigInteger() {
-        List<BigInteger> expectedOutput = Collections.singletonList(BigInteger.TWO);
+        final List<BigInteger> expected = Collections.singletonList(BigInteger.TWO);
 
-        assertEquals(expectedOutput, BigIntegerPrimes.sieve(BigInteger.TWO));
+        assertEquals(expected, BigIntegerPrimes.sieve(BigInteger.TWO));
     }
 
     //@Disabled("Remove to run test")
     @Test
     public void findPrimesUpToBigIntegerTen() {
-        List<BigInteger> expectedOutput = Arrays.asList(BigInteger.TWO,
-                new BigInteger("3"), new BigInteger("5"), new BigInteger("7"));
+        final List<BigInteger> expected = Arrays.asList(BigInteger.TWO,
+                new BigInteger("3"), new BigInteger("5"),
+                new BigInteger("7"));
 
-        assertEquals(expectedOutput, BigIntegerPrimes.sieve(BigInteger.TEN));
+        assertEquals(expected, BigIntegerPrimes.sieve(BigInteger.TEN));
     }
 
     //@Disabled("Remove to run test")
     @Test
     public void limitIsPrimeBigInteger() {
-        List<BigInteger> expectedOutput = Arrays.asList(BigInteger.TWO,
-                new BigInteger("3"), new BigInteger("5"), new BigInteger("7"),
-                new BigInteger("11"), new BigInteger("13"));
+        final List<BigInteger> expected = Arrays.asList(
+                BigInteger.TWO, new BigInteger("3"),
+                new BigInteger("5"), new BigInteger("7"),
+                new BigInteger("11"), new BigInteger("13")
+        );
 
-        assertEquals(expectedOutput, BigIntegerPrimes.sieve(new BigInteger("13")));
+        assertEquals(expected, BigIntegerPrimes.sieve(new BigInteger("13")));
     }
 
     //@Disabled("Remove to run test")
     @Test
     public void findPrimesUpToBigInteger1000BigInteger() {
-        List<BigInteger> expectedOutput = Arrays.asList(BigInteger.TWO, new BigInteger("3"),
+        final List<BigInteger> expected = Arrays.asList(BigInteger.TWO, new BigInteger("3"),
                 new BigInteger("5"), new BigInteger("7"), new BigInteger("11"),
                 new BigInteger("13"), new BigInteger("17"), new BigInteger("19"),
                 new BigInteger("23"), new BigInteger("29"), new BigInteger("31"),
@@ -167,7 +171,69 @@ class BigIntegerPrimesTest {
                 new BigInteger("977"), new BigInteger("983"), new BigInteger("991"),
                 new BigInteger("997"));
 
-        assertEquals(expectedOutput, BigIntegerPrimes.sieve(new BigInteger("1000")));
+        assertEquals(expected, BigIntegerPrimes.sieve(new BigInteger("1000")));
+    }
+
+    //@Disabled("Remove to run test")
+    @Test
+    public void testNoFactors() {
+        final List<BigInteger> expected = Collections.emptyList();
+
+        assertEquals(expected, BigIntegerPrimes.decompose(BigInteger.ONE));
+    }
+
+    //@Disabled("Remove to run test")
+    @Test
+    public void testPrimeNumber() {
+        final List<BigInteger> expected = Collections.singletonList(BigInteger.TWO);
+
+        assertEquals(expected, BigIntegerPrimes.decompose(BigInteger.TWO));
+    }
+
+    //@Disabled("Remove to run test")
+    @Test
+    public void testSquareOfAPrime() {
+        final List<BigInteger> expected = Arrays.asList(new BigInteger("3"),
+                new BigInteger("3"));
+
+        assertEquals(expected, BigIntegerPrimes.decompose(new BigInteger("9")));
+    }
+
+    //@Disabled("Remove to run test")
+    @Test
+    public void testCubeOfAPrime() {
+        final List<BigInteger> expected = Arrays.asList(BigInteger.TWO,
+                BigInteger.TWO, BigInteger.TWO);
+
+        assertEquals(expected, BigIntegerPrimes.decompose(new BigInteger("8")));
+    }
+
+    //@Disabled("Remove to run test")
+    @Test
+    public void testProductOfPrimesAndNonPrimes() {
+        final List<BigInteger> expected = Arrays.asList(BigInteger.TWO,
+                BigInteger.TWO, new BigInteger("3"));
+
+        assertEquals(expected, BigIntegerPrimes.decompose(new BigInteger("12")));
+    }
+
+    //@Disabled("Remove to run test")
+    @Test
+    public void testProductOfPrimes() {
+        final List<BigInteger> expected = Arrays.asList(new BigInteger("5"),
+                new BigInteger("17"), new BigInteger("23"),
+                new BigInteger("461"));
+
+        assertEquals(expected, BigIntegerPrimes.decompose(new BigInteger("901255")));
+    }
+
+    //@Disabled("Remove to run test")
+    @Test
+    public void testFactorsIncludingALargePrime() {
+        final List<BigInteger> expected = Arrays.asList(new BigInteger("11"),
+                new BigInteger("9539"), new BigInteger("894119"));
+
+        assertEquals(expected, BigIntegerPrimes.decompose(new BigInteger("93819012551")));
     }
 
 }

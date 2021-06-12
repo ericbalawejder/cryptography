@@ -1,7 +1,9 @@
 package com.examples.cryptography.util;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,7 +20,8 @@ public class BigIntegerPrimes {
     }
 
     public static List<BigInteger> sieve(BigInteger limit) {
-        final Set<BigInteger> notPrime = Stream.iterate(BigInteger.TWO,
+        final Set<BigInteger> notPrime = Stream.iterate(
+                BigInteger.TWO,
                 i -> i.compareTo(limit.sqrt()) <= 0,
                 BigInteger.ONE::add)
                 .flatMap(x -> Stream.iterate(x.multiply(x), n -> n.compareTo(limit) <= 0, x::add))
@@ -50,6 +53,22 @@ public class BigIntegerPrimes {
                     BigInteger.TWO::add)
                     .noneMatch(n -> number.mod(n).equals(BigInteger.ZERO));
         }
+    }
+
+    public static List<BigInteger> decompose(BigInteger number) {
+        final Optional<BigInteger> lowestPrime = Stream.iterate(
+                    BigInteger.TWO,
+                    i -> i.compareTo(number) <= 0,
+                    BigInteger.ONE::add)
+                .filter(i -> number.mod(i).compareTo(BigInteger.ZERO) == 0)
+                .findFirst();
+
+        final List<BigInteger> primeFactors = new ArrayList<>();
+        if (lowestPrime.isPresent()) {
+            primeFactors.add(lowestPrime.get());
+            primeFactors.addAll(decompose(number.divide(lowestPrime.get())));
+        }
+        return List.copyOf(primeFactors);
     }
 
 }
