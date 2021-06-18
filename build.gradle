@@ -14,6 +14,13 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.19.0'
     testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.69'
+
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on
+    implementation group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: '1.69'
+
 }
 
 test {
