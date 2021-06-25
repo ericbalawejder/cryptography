@@ -21,7 +21,7 @@ public class KeyPairGeneratorDemo {
         System.out.println("Public key is " + publicKey);
 
         System.out.println("Our Hex-Encoded public key is:\n" +
-                Util.bytesToHexFormatted(publicKey.getEncoded(), 21));
+                Util.bytesToHex(publicKey.getEncoded(), 21));
 
         System.out.println("Private key is " + privateKey);
     }

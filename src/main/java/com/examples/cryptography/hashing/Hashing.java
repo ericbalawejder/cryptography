@@ -29,7 +29,7 @@ public class Hashing {
         final byte[] hashed = messageDigest.digest();
 
         System.out.println("The " + messageDigest.getAlgorithm() +
-                " value is:\n" + Util.bytesToHexFormatted(hashed, 16));
+                " value is:\n" + Util.bytesToHex(hashed, 16));
     }
 
 }

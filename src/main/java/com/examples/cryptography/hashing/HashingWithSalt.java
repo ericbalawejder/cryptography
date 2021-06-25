@@ -40,7 +40,7 @@ public class HashingWithSalt {
 
         System.out.println("The SHA-" + pbeKeySpecWithExplicitSalt.getKeyLength() +
                 " value salted with " + secretKeyFactory.getAlgorithm() +
-                " is: \n" + Util.bytesToHexFormatted(hashedWithEmail, 16));
+                " is: \n" + Util.bytesToHex(hashedWithEmail, 16));
 
         final byte[] hashedWithRandomSalt = secretKeyFactory
                 .generateSecret(pbeKeySpecWithRandomSalt)
@@ -48,7 +48,7 @@ public class HashingWithSalt {
 
         System.out.println("The SHA-" + pbeKeySpecWithRandomSalt.getKeyLength() +
                 " value salted with " + secretKeyFactory.getAlgorithm() +
-                " is: \n" + Util.bytesToHexFormatted(hashedWithRandomSalt, 16));
+                " is: \n" + Util.bytesToHex(hashedWithRandomSalt, 16));
     }
 
 }

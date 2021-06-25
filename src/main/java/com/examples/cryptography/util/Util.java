@@ -12,7 +12,7 @@ public class Util {
         return stringBuilder.toString();
     }
 
-    public static String bytesToHexFormatted(byte[] bytes, int hexPerLine) {
+    public static String bytesToHex(byte[] bytes, int hexPerLine) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
             stringBuilder.append(String.format("%02X ", bytes[i]));
