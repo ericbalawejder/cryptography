@@ -20,8 +20,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on
     implementation group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: '1.69'
-
-    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.1'
 }
 
 test {

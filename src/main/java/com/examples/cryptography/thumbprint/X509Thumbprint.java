@@ -1,9 +1,9 @@
 package com.examples.cryptography.thumbprint;
 
 import com.examples.cryptography.encryption.KeyStoreDemo;
+import com.examples.cryptography.util.Util;
 import org.bouncycastle.operator.OperatorCreationException;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.security.KeyPair;
@@ -50,7 +50,7 @@ public class X509Thumbprint {
         final byte[] ans1derEncoding = certificate.getEncoded();
         messageDigest.update(ans1derEncoding);
         final byte[] digest = messageDigest.digest();
-        return DatatypeConverter.printHexBinary(digest).toLowerCase();
+        return Util.bytesToHex(digest);
     }
 
 }
