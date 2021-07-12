@@ -1,4 +1,4 @@
-package com.examples.cryptography.thumbprint;
+package com.examples.cryptography.certificate;
 
 import com.examples.cryptography.encryption.KeyStoreDemo;
 import com.examples.cryptography.util.Util;
