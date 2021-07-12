@@ -23,10 +23,14 @@ Symmetric encryption
 
 Asymmetric encryption
 
-Certificate [thumbprint](https://github.com/ericbalawejder/cryptography/blob/main/src/main/java/com/examples/cryptography/thumbprint/X509Thumbprint.java) 
-using Java.
+Certificate thumbprint using Java.
 Using openssl on command line:
 ```
 $ cat file.crt.pem | openssl x509 -sha1 -fingerprint
 ```
 
+Certificate chain
+
+[Diagnosing TLS, SSL, and HTTPS](https://blogs.oracle.com/java-platform-group/diagnosing-tls,-ssl,-and-https)
+
+[encryption-and-cryptology](https://security.stackexchange.com/questions/2202/lessons-learned-and-misconceptions-regarding-encryption-and-cryptology)
