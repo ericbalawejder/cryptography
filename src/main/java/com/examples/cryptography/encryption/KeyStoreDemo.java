@@ -42,10 +42,10 @@ public class KeyStoreDemo {
 
         if (args.length == 0) {
             keyStoreLocation = File.createTempFile("keystore", ".jks");
-            keyStore.load(null, "pleasechangeme".toCharArray());
+            keyStore.load(null, "changeit".toCharArray());
         } else {
             keyStoreLocation = new File(args[0]);
-            keyStore.load(new FileInputStream(keyStoreLocation), "pleasechangeme".toCharArray());
+            keyStore.load(new FileInputStream(keyStoreLocation), "changeit".toCharArray());
         }
 
         System.out.println("Stored keystore to " + keyStoreLocation);
@@ -59,10 +59,10 @@ public class KeyStoreDemo {
                 new Certificate[]{certificate});
 
         keyStore.setEntry("eric-cert", entry,
-                new KeyStore.PasswordProtection("pleasechangeme".toCharArray()));
+                new KeyStore.PasswordProtection("changeit".toCharArray()));
 
         keyStore.store(new FileOutputStream(keyStoreLocation),
-                "pleasechangeme".toCharArray());
+                "changeit".toCharArray());
     }
 
     // KeyPairs must be wrapped with Certificates for identification purposes.
