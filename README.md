@@ -57,3 +57,6 @@ Additional resources:<br>
 
 [Keylength](https://www.keylength.com/) implements mathematical formulas and summarizes reports 
 from well-known organizations allowing you to quickly evaluate the minimum security requirements for your system.
+
+SSL Labs
+[SSL Server Test](https://www.ssllabs.com/ssltest/)
