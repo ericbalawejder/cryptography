@@ -7,79 +7,70 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 /**
- * Current character set is defined in the ASCII table: https://www.asciitable.com/
- * The special symbols are not contiguous in the number range 33 - 127 and
- * only the range 33 - 48 are explicit in the generator.
- * <p>
- * TODO: Create a policy.
- * <p>
- * private static final String LOWERCASE_CHAR = "abcdefghijklmnopqrstuvwxyz";
- * private static final String UPPERCASE_CHAR = LOWERCASE_CHAR.toUpperCase();
- * private static final String DIGIT = "0123456789";
- * private static final String PUNCTUATION = "!@#&()–[{}]:;',?/*";
- * private static final String SYMBOL = "~$^+=<>";
- * private static final String SPECIAL_CHAR = PUNCTUATION + SYMBOL;
- * <p>
- * private static final String PASSWORD_POLICY =
- * LOWERCASE_CHAR + UPPERCASE_CHAR + DIGIT + SPECIAL_CHAR;
- * <p>
  * Passwords should be stored in char[] but does .toCharArray() leave a copy of the String
  * in memory?
- * <p>
+ *
  * Should generateRandomPassword() return char[], List<Character> or String?
  */
 public class PasswordGenerator {
 
+    private static final String LOWERCASE_CHAR = "abcdefghijklmnopqrstuvwxyz";
+    private static final String UPPERCASE_CHAR = LOWERCASE_CHAR.toUpperCase();
+    private static final String DIGIT = "0123456789";
+    private static final String PUNCTUATION = "!@#&()–[{}]:;',?/*";
+    private static final String SYMBOL = "~$^+=<>";
+    private static final String SPECIAL_CHAR = PUNCTUATION + SYMBOL;
+
+    private static final String PASSWORD_POLICY =
+            LOWERCASE_CHAR + UPPERCASE_CHAR + DIGIT + SPECIAL_CHAR;
+
+    private static final SecureRandom secureRandom = new SecureRandom();
+
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        System.out.println(generateRandomPassword(20));
 
         // Always store a password in char[]?
         final char[] password = generateRandomPassword(32).toCharArray();
         System.out.println(password);
 
-        System.out.println(Util.bytesToHex(hashPassword(generateRandomPassword(32))));
+        System.out.println(Util.bytesToHex(hashPassword(password)));
     }
 
-    // 1 upper case, 1 lower case, 2 digits, 2 symbols in ascii range 33 - 48
-    private static String generateRandomPassword(int length) {
-        if (length < 8) throw new IllegalArgumentException("password must be at least 8 characters");
+    public static String generateRandomPassword(int length) {
+        if (length < 8) {
+            throw new IllegalArgumentException("password length must be greater than 8 characters");
+        }
 
-        final Stream<Character> upperCaseCharacter = new SecureRandom()
-                .ints(1, 65, 91)
-                .mapToObj(i -> (char) i);
+        final String password = generateRandomString(LOWERCASE_CHAR, 2) +
+                generateRandomString(UPPERCASE_CHAR, 2) +
+                generateRandomString(DIGIT, 2) +
+                generateRandomString(SPECIAL_CHAR, 2) +
+                generateRandomString(PASSWORD_POLICY, length - 8);
 
-        final Stream<Character> lowerCaseCharacter = new SecureRandom()
-                .ints(1, 97, 123)
-                .mapToObj(i -> (char) i);
+        return shuffleString(password);
+    }
 
-        final Stream<Character> numbers = new SecureRandom()
-                .ints(2, 48, 58)
-                .mapToObj(i -> (char) i);
+    private static String generateRandomString(String alphabet, int size) {
+        if (alphabet == null || alphabet.length() <= 0) throw new IllegalArgumentException("Invalid alphabet.");
+        if (size < 0) throw new IllegalArgumentException("Invalid size.");
 
-        final Stream<Character> symbols = new SecureRandom()
-                .ints(2, 33, 48)
-                .mapToObj(i -> (char) i);
+        return IntStream.range(0, size)
+                .map(i -> secureRandom.nextInt(alphabet.length()))
+                .mapToObj(alphabet::charAt)
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                .toString();
+    }
 
-        final Stream<Character> remaining = new SecureRandom()
-                .ints(length - 6, 33, 127)
-                .mapToObj(i -> (char) i);
-
-        final List<Character> password =
-                Stream.of(upperCaseCharacter, lowerCaseCharacter, numbers, symbols, remaining)
-                        .flatMap(i -> i)
-                        .collect(Collectors.toList());
-
-        Collections.shuffle(password);
-
-        return password.stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining());
+    private static String shuffleString(String input) {
+        final List<String> result = Arrays.asList(input.split(""));
+        Collections.shuffle(result);
+        return String.join("", result);
     }
 
     private static List<Character> generateNoPolicyRandomPassword(int length) {
@@ -89,11 +80,11 @@ public class PasswordGenerator {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static byte[] hashPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    private static byte[] hashPassword(char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         final byte[] salt = new SecureRandom().generateSeed(64);
 
         final PBEKeySpec pbeKeySpecWithRandomSalt =
-                new PBEKeySpec(password.toCharArray(), salt, 65536, 512);
+                new PBEKeySpec(password, salt, 65536, 512);
 
         final SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
 
