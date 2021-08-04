@@ -9,6 +9,7 @@ public class Util {
         for (byte b : bytes) {
             stringBuilder.append(String.format("%02X ", b));
         }
+        stringBuilder.setLength(Math.max(stringBuilder.length() - 1, 0));
         return stringBuilder.toString();
     }
 
@@ -20,6 +21,7 @@ public class Util {
                 stringBuilder.append("\n");
             }
         }
+        stringBuilder.setLength(Math.max(stringBuilder.length() - 1, 0));
         return stringBuilder.toString();
     }
 
