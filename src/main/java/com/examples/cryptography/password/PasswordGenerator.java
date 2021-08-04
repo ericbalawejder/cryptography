@@ -40,6 +40,8 @@ public class PasswordGenerator {
         System.out.println(password);
 
         System.out.println(Util.bytesToHex(hashPassword(password)));
+
+        System.out.println(Util.bytesToHex(hashPassword("He()0World".toCharArray())));
     }
 
     public static String generateRandomPassword(int length) {
@@ -80,8 +82,9 @@ public class PasswordGenerator {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static byte[] hashPassword(char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        final byte[] salt = new SecureRandom().generateSeed(64);
+    public static byte[] hashPassword(char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        //final byte[] salt = new SecureRandom().generateSeed(64);
+        final byte[] salt = "usuallyUser@email.com".getBytes();
 
         final PBEKeySpec pbeKeySpecWithRandomSalt =
                 new PBEKeySpec(password, salt, 65536, 512);
