@@ -20,13 +20,13 @@ API to help understand the implementation. The algorithm names can be found in t
     ```
 
 * KeyTool:
-[Self-signed certificates for a known community](https://blogs.oracle.com/java-platform-group/self-signed-certificates-for-a-known-community)
+  * [Self-signed certificates for a known community](https://blogs.oracle.com/java-platform-group/self-signed-certificates-for-a-known-community)
 
 * Symmetric encryption
 
 * Asymmetric encryption
 
-* Certificate thumbprint using Java.
+* Certificate thumbprint using Java
     * Using openssl on command line:
     ```
     $ cat file.crt.pem | openssl x509 -sha1 -fingerprint
@@ -48,7 +48,24 @@ API to help understand the implementation. The algorithm names can be found in t
     ```
 
 * Decompliation tools
+  * Finding keys, IV's and other sensitive data in bytecode.
   * javap, IntelliJ FernFlower
+
+* File encryption and decryption
+
+* Passwords
+  * Password generation
+  * Password validation
+  * Password hashing
+
+* Ciphers
+  * Affine
+  * Atbash
+  * Diffie Hellman
+  * Rotational
+
+* Deconstruct [java.util.Random](https://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/java/util/Random.java)
+  * Generate two random numbers and then guess the third.
 
 Additional resources:<br>
 [Diagnosing TLS, SSL, and HTTPS](https://blogs.oracle.com/java-platform-group/diagnosing-tls,-ssl,-and-https)
@@ -58,5 +75,5 @@ Additional resources:<br>
 [Keylength](https://www.keylength.com/) implements mathematical formulas and summarizes reports 
 from well-known organizations allowing you to quickly evaluate the minimum security requirements for your system.
 
-SSL Labs
+SSL Labs.
 [SSL Server Test](https://www.ssllabs.com/ssltest/)
