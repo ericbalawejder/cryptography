@@ -70,6 +70,8 @@ API to help understand the implementation. The algorithm names can be found in t
 Additional resources:<br>
 [How to store a salt](https://security.stackexchange.com/questions/17421/how-to-store-salt)
 
+[Argon2-jvm](https://github.com/phxql/argon2-jvm)
+
 [Diagnosing TLS, SSL, and HTTPS](https://blogs.oracle.com/java-platform-group/diagnosing-tls,-ssl,-and-https)
 
 [encryption-and-cryptology](https://security.stackexchange.com/questions/2202/lessons-learned-and-misconceptions-regarding-encryption-and-cryptology)
