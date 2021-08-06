@@ -1,6 +1,6 @@
 package com.examples.cryptography.certificate;
 
-import com.examples.cryptography.encryption.KeyStoreDemo;
+import com.examples.cryptography.keys.KeyStoreDemo;
 import com.examples.cryptography.util.Util;
 import org.bouncycastle.operator.OperatorCreationException;
 

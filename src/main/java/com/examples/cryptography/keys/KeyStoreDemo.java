@@ -1,4 +1,4 @@
-package com.examples.cryptography.encryption;
+package com.examples.cryptography.keys;
 
 import java.io.File;
 import java.io.FileInputStream;
