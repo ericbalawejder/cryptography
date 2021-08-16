@@ -1,6 +1,5 @@
 package com.examples.cryptography.password;
 
-import com.examples.cryptography.util.Util;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -73,24 +72,20 @@ class PasswordValidatorTest {
 
     @Test
     void testPasswordHash() throws NoSuchAlgorithmException, InvalidKeySpecException {
-        String expected = "2F 53 B5 95 C6 D9 05 B9 38 F7 66 4E 6A 1C F2 E2 5E 1F E2 DC 5B 83 D9 " +
-                "AF C0 B4 6A 6A 04 60 A0 5A 62 08 00 E3 93 41 07 08 7C 61 BE 79 CF 4D 98 3C B9 EE " +
-                "28 7F 7D FE 7C C4 04 3C 1A 00 71 8A B6 67";
+        String expected = "L1O1lcbZBbk492ZOahzy4l4f4txbg9mvwLRqagRgoFpiCADjk0EHCHxhvnnPTZg8ue4of33+fMQEPBoAcYq2Zw==";
 
         final char[] password = "He()0World".toCharArray();
-        String actual = Util.bytesToHex(PasswordGenerator.hashPassword(password));
+        String actual = PasswordGenerator.hashPassword(password, "usuallyUser@email.com");
 
         assertEquals(expected, actual);
     }
 
     @Test
     void testBadPasswordHash() throws NoSuchAlgorithmException, InvalidKeySpecException {
-        String expected = "2C 53 B5 95 C6 D9 05 B9 38 F7 66 4E 6A 1C F2 E2 5E 1F E2 DC 5B 83 D9 " +
-                "AF C0 B4 6A 6A 04 60 A0 5A 62 08 00 E3 93 41 07 08 7C 61 BE 79 CF 4D 98 3C B9 EE " +
-                "28 7F 7D FE 7C C4 04 3C 1A 00 71 8A B6 67";
+        String expected = "92ZOahzy4l4f4txbg9mvwLRqagRgoFpiCADjk0EHCHxhvnnPTZg8ue4o";
 
         final char[] password = "He()0World".toCharArray();
-        String actual = Util.bytesToHex(PasswordGenerator.hashPassword(password));
+        String actual = PasswordGenerator.hashPassword(password, "usuallyUser@email.com");
 
         assertNotEquals(expected, actual);
     }

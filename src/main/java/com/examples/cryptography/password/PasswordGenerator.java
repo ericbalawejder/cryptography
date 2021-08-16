@@ -1,13 +1,12 @@
 package com.examples.cryptography.password;
 
-import com.examples.cryptography.util.Util;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,16 +38,15 @@ public class PasswordGenerator {
         final char[] password = generateRandomPassword(32).toCharArray();
         System.out.println(password);
 
-        System.out.println(Util.bytesToHex(hashPassword(password)));
+        System.out.println((hashPassword(password, "usuallyUser@email.com")));
 
-        System.out.println(Util.bytesToHex(hashPassword("He()0World".toCharArray())));
+        System.out.println((hashPassword("He()0World".toCharArray(), "usuallyUser@email.com")));
     }
 
     public static String generateRandomPassword(int length) {
         if (length < 8) {
             throw new IllegalArgumentException("password length must be greater than 8 characters");
         }
-
         final String password = generateRandomString(LOWERCASE_CHAR, 2) +
                 generateRandomString(UPPERCASE_CHAR, 2) +
                 generateRandomString(DIGIT, 2) +
@@ -82,16 +80,16 @@ public class PasswordGenerator {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static byte[] hashPassword(char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static String hashPassword(char[] password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         //final byte[] salt = new SecureRandom().generateSeed(64);
-        final byte[] salt = "usuallyUser@email.com".getBytes();
 
-        final PBEKeySpec pbeKeySpecWithRandomSalt =
-                new PBEKeySpec(password, salt, 65536, 512);
+        final PBEKeySpec pbeKeySpecWithSalt =
+                new PBEKeySpec(password, salt.getBytes(), 65536, 512);
 
         final SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
 
-        return secretKeyFactory.generateSecret(pbeKeySpecWithRandomSalt).getEncoded();
+        return new String(Base64.getEncoder()
+                .encode(secretKeyFactory.generateSecret(pbeKeySpecWithSalt).getEncoded()));
     }
 
 }

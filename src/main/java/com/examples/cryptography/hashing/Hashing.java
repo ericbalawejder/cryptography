@@ -1,19 +1,41 @@
 package com.examples.cryptography.hashing;
 
-import com.examples.cryptography.util.Util;
-
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 public class Hashing {
 
-    // Produce the hash of this compiled class file.
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
+        System.out.println(hashClassFile());
+        System.out.println(hashEncodeBase64("hello world"));
+        final String path = "/Users/ericbalawejder/Development/cryptography/build/classes/java/main/com/examples/cryptography/hashing/Hashing.class";
+        final File file = new File(path);
+        System.out.println(hashEncodeFileBase64(file));
 
-        //final MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-        final MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+        System.out.println(hashClassFile().equals(hashEncodeFileBase64(file)));
+    }
+
+    public static String hashEncodeBase64(String clearText) throws NoSuchAlgorithmException {
+        final byte[] messageDigest = MessageDigest.getInstance("SHA-256")
+                .digest(clearText.getBytes(StandardCharsets.UTF_8));
+        return new String(Base64.getEncoder().encode(messageDigest));
+    }
+
+    public static String hashEncodeFileBase64(File file) throws NoSuchAlgorithmException, IOException {
+        final byte[] data = Files.readAllBytes(file.toPath());
+        final MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        messageDigest.update(data);
+        return Base64.getEncoder().encodeToString(messageDigest.digest());
+    }
+
+    public static String hashClassFile() throws NoSuchAlgorithmException {
+        final MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 
         try (InputStream inputStream = Hashing.class.getResourceAsStream(
                 Hashing.class.getSimpleName() + ".class")) {
@@ -25,11 +47,8 @@ public class Hashing {
             }
         } catch (IOException ignored) {
         }
-
         final byte[] hashed = messageDigest.digest();
-
-        System.out.println("The " + messageDigest.getAlgorithm() +
-                " value is:\n" + Util.bytesToHex(hashed, 16));
+        return new String(Base64.getEncoder().encode(hashed));
     }
 
 }
