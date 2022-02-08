@@ -68,6 +68,8 @@ API to help understand the implementation. The algorithm names can be found in t
   * Generate two random numbers and then guess the third.
 
 Additional resources:<br>
+[RSA keys](https://hackernoon.com/public-key-cryptography-rsa-keys-izda3ylv)
+
 [How to store a salt](https://security.stackexchange.com/questions/17421/how-to-store-salt)
 
 [Argon2-jvm](https://github.com/phxql/argon2-jvm)

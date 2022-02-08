@@ -28,7 +28,7 @@ public class CertificateChain {
 
         Arrays.stream(certificates)
                 .map(cert -> (X509Certificate) cert)
-                .forEach(x509 -> System.out.println(x509.getIssuerDN().getName()));
+                .forEach(x509 -> System.out.println(x509.getIssuerX500Principal().getName()));
 
         System.out.println("The final certificate is for: " + connection.getPeerPrincipal());
     }
