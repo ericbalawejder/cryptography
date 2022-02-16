@@ -4,11 +4,12 @@ import java.util.Random;
 
 public class DeconstructJavaUtilRandom {
 
-    // https://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/java/util/Random.java
     public static void main(String[] args) {
+        System.out.println(deconstruct(new Random()));
+    }
 
-        final Random random = new Random();
-
+    // https://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/java/util/Random.java
+    public static int deconstruct(Random random) {
         // We are going to guess the thirdRandom
         final int firstRandom = random.nextInt();
         final int secondRandom = random.nextInt();
@@ -40,13 +41,17 @@ public class DeconstructJavaUtilRandom {
             final int thirdRandomGuess = (int) (nextSeed >>> 16);
             final int thirdRandom = random.nextInt();
             if (thirdRandomGuess == thirdRandom) {
-                System.out.println("guessed third random correctly: " + thirdRandomGuess + " = " + thirdRandom);
+                System.out.println("guessed third random correctly: " + thirdRandomGuess +
+                        " -> random.nextInt() = " + thirdRandom);
+                return thirdRandomGuess;
             } else {
                 System.out.println("wrong third random guess");
+                return -1;
             }
         } else {
             System.out.println("seed not found");
         }
+        return -1;
     }
 
 }

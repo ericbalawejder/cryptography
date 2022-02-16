@@ -1,5 +1,5 @@
 ## cryptography
-A collection of cryptography and security examples from the Java 
+This is a reference of cryptography and security examples from the Java 
 [security](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/package-summary.html) 
 API to help understand the implementation. The algorithm names can be found in the 
 [Standard Names docs](https://docs.oracle.com/en/java/javase/17/docs/specs/security/standard-names.html).
