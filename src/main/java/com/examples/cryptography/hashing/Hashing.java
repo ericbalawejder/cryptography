@@ -12,13 +12,9 @@ import java.util.Base64;
 public class Hashing {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
-        System.out.println(hashClassFile());
         System.out.println(hashEncodeBase64("hello world"));
-        final String path = "/Users/ericbalawejder/Development/cryptography/build/classes/java/main/com/examples/cryptography/hashing/Hashing.class";
-        final File file = new File(path);
-        System.out.println(hashEncodeFileBase64(file));
-
-        System.out.println(hashClassFile().equals(hashEncodeFileBase64(file)));
+        System.out.println(hashClassFile());
+        System.out.println(hashEncodeFileBase64(new File("src/test/resources/sample.txt")));
     }
 
     public static String hashEncodeBase64(String clearText) throws NoSuchAlgorithmException {
@@ -36,19 +32,31 @@ public class Hashing {
 
     public static String hashClassFile() throws NoSuchAlgorithmException {
         final MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-
         try (InputStream inputStream = Hashing.class.getResourceAsStream(
                 Hashing.class.getSimpleName() + ".class")) {
-
             final byte[] bytes = new byte[1024];
-
             for (int length = inputStream.read(bytes); length != -1; length = inputStream.read(bytes)) {
                 messageDigest.update(bytes, 0, length);
             }
         } catch (IOException ignored) {
         }
-        final byte[] hashed = messageDigest.digest();
-        return new String(Base64.getEncoder().encode(hashed));
+        return new String(Base64.getEncoder().encode(messageDigest.digest()));
     }
+
+    /**
+     * Spring Boot MultipartFile type example:
+     *
+     * public static String encodeFileBase64(MultipartFile multipartFile) throws NoSuchAlgorithmException {
+     *     final MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+     *     try (InputStream inputStream = multipartFile.getInputStream()) {
+     *         final byte[] bytes = new byte[1024];
+     *         for (int length = inputStream.read(bytes); length != -1; length = inputStream.read(bytes)) {
+     *             messageDigest.update(bytes, 0, length);
+     *         }
+     *     } catch (IOException ignored) {
+     *     }
+     *     return Base64.getEncoder().encodeToString(messageDigest.digest());
+     * }
+     */
 
 }
