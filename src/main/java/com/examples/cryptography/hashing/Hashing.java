@@ -1,5 +1,7 @@
 package com.examples.cryptography.hashing;
 
+import org.springframework.security.crypto.codec.Hex;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +17,13 @@ public class Hashing {
         System.out.println(hashEncodeBase64("hello world"));
         System.out.println(hashClassFile());
         System.out.println(hashEncodeFileBase64(new File("src/test/resources/sample.txt")));
+    }
+
+    // Uses Spring Security dependency Hex class
+    public static String hashToHex(String clearText) throws NoSuchAlgorithmException {
+        final byte[] bytes = MessageDigest.getInstance("SHA-256")
+                .digest(clearText.getBytes(StandardCharsets.UTF_8));
+        return new String(Hex.encode(bytes));
     }
 
     public static String hashEncodeBase64(String clearText) throws NoSuchAlgorithmException {
