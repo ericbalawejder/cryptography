@@ -13,20 +13,13 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
-
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.19.0'
     testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
 
-    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.69'
-
-    // https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on
     implementation group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: '1.69'
-
     implementation group: 'com.github.spoofzu', name: 'DeepViolet', version: '5.1.16'
-
     implementation group: 'de.mkammerer', name: 'argon2-jvm', version: '2.6'
-
     implementation 'org.springframework.security:spring-security-core:5.6.2'
 }
 
